@@ -1,4 +1,6 @@
+##
 import sys
+seperator = '\t'
 
 def main():
     fileHandlers = []
@@ -25,7 +27,7 @@ def main():
         i = 1
         while(exitFlag):
             print "Appending row " + str(i)
-            for handler in fileHandlers:
+            for index, handler in enumerate(fileHandlers):
                 # get just one row from each file
                 currentLine = handler.readline()
                 if not currentLine:
@@ -37,6 +39,8 @@ def main():
                 currentLine = currentLine.rstrip('\n')
                 print currentLine
                 out.write(currentLine)
+                if index == 0:
+                    out.write(seperator)
             # add a newline to indicate done with row
             out.write('\n')
             i += 1
