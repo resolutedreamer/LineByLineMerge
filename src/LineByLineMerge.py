@@ -8,6 +8,8 @@ PROCESS_MODE = 0
 Perform a line by line merge with lines seperated by seperator
 PROCESS_MODE = 1
 Perform a top bottom merge
+PROCESS_MODE = 2
+Extract lines that come after lines starting with 'start'
 '''
 import sys
 import os
@@ -15,6 +17,7 @@ FILE_MODE = 0
 PROCESS_MODE = 0
 expression = ''
 seperator = ''
+start = ''
 
 def main():
     fileHandlers = []
@@ -45,19 +48,37 @@ def main():
             sys.argv.pop(0)
         
         print fileNames
-        # open all the files given to argv    
+        # open all the files given to argv
         for argument in sys.argv:
-        try:
-            f = open(argument, 'r+')
-            fileHandlers.append(f)
-            print f.closed
-        except:
-            print "open " + argument + "failed"
+            try:
+                f = open(argument, 'r+')
+                fileHandlers.append(f)
+                print f.closed
+            except:
+                print "open " + argument + "failed"
     if PROCESS_MODE == 0:
         line_by_line_merge(fileHandlers)
     elif PROCESS_MODE == 1:
         top_bottom_merge(fileHandlers)
+    elif PROCESS_MODE == 1:
+        extract_subsequent_line(fileHandlers)
     return 0
+
+def extract_subsequent_line(fileHandlers):
+    filename = 'merged_' + sys.argv[0]
+    output_this = False
+    with open(filename, 'w+') as out:
+        print "Writing to " + filename
+        for handler in fileHandlers:
+            for line in handler:
+                if output_this:
+                    out.write(line)
+                    output_this = False
+                else:
+                    if line.startswith(start):
+                        # next line
+                        output_this = True
+    
 
 def top_bottom_merge(fileHandlers):
     filename = 'merged_' + sys.argv[0]
