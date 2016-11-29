@@ -46,8 +46,10 @@ def main():
                 print f.closed
             except:
                 print "open " + argument + "failed"
+    top_bottom_merge(fileHandlers)
+    return 0
 
-    # closes 'out' automatically
+def top_bottom_merge(fileHandlers):
     filename = 'merged_' + sys.argv[0]
     with open(filename, 'w+') as out:
         print "Writing to " + filename
@@ -58,6 +60,8 @@ def main():
         # manually close other files when done
         for handler in fileHandlers:
             handler.close()
-    
+
+
+
 if __name__ == "__main__":
     main()
