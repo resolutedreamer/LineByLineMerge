@@ -1,32 +1,72 @@
 '''
-LineByLineMerge.py
+TopBottomMerge.py
 
-For the files passed in at the commandline, merge the text of the two files line by line, seperator by 'seperator'.
+Can be used two ways:
+1. For the files in the same folder as this script, perform a TopBottomMerge on the files that match 'expression'
+2. For the files passed in at the commandline, perform a TopBottomMerge on those files
 '''
 import sys
+import os
+PROCESS_MODE = 0
+expression = ''
 seperator = ''
 
 def main():
     fileHandlers = []
-    if len(sys.argv) < 2:
-        print "Not enough args"
-        sys.exit(1)
-    else:
-        print str(len(sys.argv)) + " arguments"
-        # remove the path to this python file
-        sys.argv.pop(0)
-    
-    # open all the files given to argv    
-    for argument in sys.argv:
+    fileNames = []
+    foundFileNames = []
+
+    files = [f for f in os.listdir('.') if os.path.isfile(f)]
+    for f in files:
+        print f
+        if f.find(expression) != -1:
+            foundFileNames.append(f)
+    if (len(foundFileNames) == 0):
+        print "no files matching 'expression' found, checking passed in arguments"
+        if len(sys.argv) < 2:
+            print "Not enough args"
+            sys.exit(1)
+        else:
+            print str(len(sys.argv)) + " arguments"
+            # remove the path to this python file
+            sys.argv.pop(0)
+        
+        print fileNames
+        # open all the files given to argv    
+        for argument in sys.argv:
         try:
             f = open(argument, 'r+')
             fileHandlers.append(f)
             print f.closed
         except:
             print "open " + argument + "failed"
-    top_bottom_merge(fileHandlers)
+    else:
+        for argument in foundFileNames:
+            try:
+                f = open(argument, 'r+')
+                fileHandlers.append(f)
+                print f.closed
+            except:
+                print "open " + argument + "failed"
+    if PROCESS_MODE == 0:
+        line_by_line_merge(fileHandlers)
+    elif PROCESS_MODE == 1:
+        top_bottom_merge(fileHandlers)
     return 0
+
 def top_bottom_merge(fileHandlers):
+    filename = 'merged_' + sys.argv[0]
+    with open(filename, 'w+') as out:
+        print "Writing to " + filename
+        for handler in fileHandlers:    
+            for line in handler:
+                out.write(line)
+            out.write('\n\n')
+        # manually close other files when done
+        for handler in fileHandlers:
+            handler.close()
+
+def line_by_line_merge(fileHandlers):
     # closes 'out' automatically
     filename = 'merged_' + sys.argv[0]
     with open(filename, 'w+') as out:
@@ -56,6 +96,7 @@ def top_bottom_merge(fileHandlers):
         print "out of while loop"
         for handler in fileHandlers:
             handler.close()
+
 
 if __name__ == "__main__":
     main()
