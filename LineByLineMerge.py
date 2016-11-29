@@ -1,6 +1,6 @@
 ##
 import sys
-seperator = '\t'
+seperator = ''
 
 def main():
     fileHandlers = []
@@ -22,7 +22,8 @@ def main():
             print "open " + argument + "failed"
 
     # closes 'out' automatically
-    with open('output.txt', 'w') as out:
+    filename = 'merged_' + sys.argv[0]
+    with open(filename, 'w+') as out:
         exitFlag = True
         i = 1
         while(exitFlag):
@@ -34,19 +35,22 @@ def main():
                     # determined by shortest file
                     exitFlag = False
                     break
-                print currentLine
-                # need to remove the newlines
-                currentLine = currentLine.rstrip('\n')
-                print currentLine
-                out.write(currentLine)
-                if index == 0:
-                    out.write(seperator)
+                else:
+                    # need to remove the newlines
+                    currentLine = currentLine.rstrip()
+                    print currentLine
+                    out.write(currentLine)
+                    if index == 0:
+                        out.write(seperator)
             # add a newline to indicate done with row
-            out.write('\n')
+            if exitFlag:
+                out.write('\n')
             i += 1
         # manually close other files when done
+        print "out of while loop"
         for handler in fileHandlers:
             handler.close()
+        return 0
     
 if __name__ == "__main__":
     main()
