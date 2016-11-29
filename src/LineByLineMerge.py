@@ -21,10 +21,9 @@ start = ''
 
 def main():
     fileHandlers = []
-    fileNames = []
-    foundFileNames = []
-    
+            
     if FILE_MODE == 0:
+        foundFileNames = []
         files = [f for f in os.listdir('.') if os.path.isfile(f)]
         for f in files:
             print f
@@ -37,8 +36,9 @@ def main():
                 print f.closed
             except:
                 print "open " + argument + "failed"
+        output_filename = 'merged_' + files[0]
     elif FILE_MODE == 1:
-        print "no files matching 'expression' found, checking passed in arguments"
+        fileNames = []
         if len(sys.argv) < 2:
             print "Not enough args"
             sys.exit(1)
@@ -57,18 +57,17 @@ def main():
             except:
                 print "open " + argument + "failed"
     if PROCESS_MODE == 0:
-        line_by_line_merge(fileHandlers)
+        line_by_line_merge(fileHandlers, output_filename)
     elif PROCESS_MODE == 1:
-        top_bottom_merge(fileHandlers)
-    elif PROCESS_MODE == 1:
-        extract_subsequent_line(fileHandlers)
+        top_bottom_merge(fileHandlers, output_filename)
+    elif PROCESS_MODE == 2:
+        extract_subsequent_line(fileHandlers, output_filename)
     return 0
 
-def extract_subsequent_line(fileHandlers):
-    filename = 'merged_' + sys.argv[0]
+def extract_subsequent_line(fileHandlers, output_filename):
     output_this = False
-    with open(filename, 'w+') as out:
-        print "Writing to " + filename
+    with open(output_filename, 'w+') as out:
+        print "Writing to " + output_filename
         for handler in fileHandlers:
             for line in handler:
                 if output_this:
@@ -80,10 +79,9 @@ def extract_subsequent_line(fileHandlers):
                         output_this = True
     
 
-def top_bottom_merge(fileHandlers):
-    filename = 'merged_' + sys.argv[0]
-    with open(filename, 'w+') as out:
-        print "Writing to " + filename
+def top_bottom_merge(fileHandlers, output_filename):
+    with open(output_filename, 'w+') as out:
+        print "Writing to " + output_filename
         for handler in fileHandlers:    
             for line in handler:
                 out.write(line)
@@ -92,10 +90,9 @@ def top_bottom_merge(fileHandlers):
         for handler in fileHandlers:
             handler.close()
 
-def line_by_line_merge(fileHandlers):
-    # closes 'out' automatically
-    filename = 'merged_' + sys.argv[0]
-    with open(filename, 'w+') as out:
+def line_by_line_merge(fileHandlers, output_filename):
+    with open(output_filename, 'w+') as out:
+        print "Writing to " + output_filename
         exitFlag = True
         i = 1
         while(exitFlag):
