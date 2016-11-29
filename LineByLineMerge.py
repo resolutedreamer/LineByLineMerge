@@ -24,7 +24,9 @@ def main():
             print f.closed
         except:
             print "open " + argument + "failed"
-
+    top_bottom_merge(fileHandlers)
+    return 0
+def top_bottom_merge(fileHandlers):
     # closes 'out' automatically
     filename = 'merged_' + sys.argv[0]
     with open(filename, 'w+') as out:
@@ -54,7 +56,6 @@ def main():
         print "out of while loop"
         for handler in fileHandlers:
             handler.close()
-        return 0
-    
+
 if __name__ == "__main__":
     main()
