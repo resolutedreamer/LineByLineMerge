@@ -1,4 +1,8 @@
-##
+'''
+LineByLineMerge.py
+
+For the files passed in at the commandline, merge the text of the two files line by line, seperator by 'seperator'.
+'''
 import sys
 seperator = ''
 
