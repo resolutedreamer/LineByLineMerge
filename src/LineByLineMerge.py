@@ -13,28 +13,28 @@ start = ''
 
 class TxtFileProcessor:
     fileHandlers = []
-    output_filename = "output.txt"        
+    output_filename = "output.txt"
 
     def unload(self):
         for handler in self.fileHandlers:
             handler.close()
 
     def load_from_folder(self, expression, folder_path):
-        foundFileNames = []
+        matching_file_paths = []
         print os.listdir(folder_path)
-        files = [f for f in os.listdir(folder_path) if os.path.isfile((folder_path + "/" + f))]
-        for f in files:
+        all_file_paths = [(folder_path + f)) for f in os.listdir(folder_path) if os.path.isfile((folder_path + f))]
+        for f in all_file_paths:
             print f
             if f.find(expression) != -1:
-                foundFileNames.append(f)
-        for argument in foundFileNames:
+                matching_file_paths.append(f)
+        for argument in matching_file_paths:
             try:
                 f = open(argument, 'r+')
                 self.fileHandlers.append(f)
                 print f.closed
             except:
                 print "open " + argument + "failed"
-        self.output_filename = 'merged_' + files[0]
+        self.output_filename = 'merged_' + all_file_paths[0]
         return len(self.fileHandlers)
         
     def load_from_args(self):

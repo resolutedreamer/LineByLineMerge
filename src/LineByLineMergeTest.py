@@ -9,7 +9,7 @@ class LineByLineMergeTest(unittest.TestCase):
         self.processor = TxtFileProcessor()
         
     def test_load_from_folder(self):
-        self.assertEquals(self.processor.load_from_folder('.txt', './test_data'), 3)
+        self.assertEquals(self.processor.load_from_folder('.txt', './test_data/'), 3)
         self.processor.unload()
 
     def test_load_from_args(self):
