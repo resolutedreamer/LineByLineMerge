@@ -1,6 +1,8 @@
 LineByLineMerge
 ======
-Helper Functions that I'm using to manipulate text files.
+## Txt file merging and searching tool
+
+[![Build Status](https://travis-ci.org/resolutedreamer/LineByLineMerge.svg?branch=master)](https://travis-ci.org/resolutedreamer/LineByLineMerge)
 
 1. Merge files line by line.
 2. Merge files one after another.
