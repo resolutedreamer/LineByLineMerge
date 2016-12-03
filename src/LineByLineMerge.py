@@ -22,7 +22,8 @@ class TxtFileProcessor:
     def load_from_folder(self, expression, folder_path):
         matching_file_paths = []
         print os.listdir(folder_path)
-        all_file_paths = [(folder_path + f)) for f in os.listdir(folder_path) if os.path.isfile((folder_path + f))]
+        all_files = [f for f in os.listdir(folder_path) if os.path.isfile((folder_path + f))]
+        all_file_paths = [folder_path + file_name for file_name in all_files]
         for f in all_file_paths:
             print f
             if f.find(expression) != -1:
