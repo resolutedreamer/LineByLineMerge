@@ -6,17 +6,20 @@ import os
 
 FILE_MODE = 0
 PROCESS_MODE = 0
-expression = ''
-seperator = ''
-start = ''
-
 
 class TxtFileProcessor:
     def __init__(self):
         self.filePaths = []
         self.output_filename = "output.txt"
 
-    def load_from_folder(self, expression, folder_path):
+    def load_from_folder_tree(self, expression = '.txt', folder_path = './'):
+        self.filePaths = [os.path.join(root, name)
+                    for root, dirs, files in os.walk(folder_path)
+                    for name in files
+                    if (name.find(expression) != -1)]
+        return len(self.filePaths)
+
+    def load_from_folder(self, expression = '.txt', folder_path = './'):
         print os.listdir(folder_path)
         all_files = [f for f in os.listdir(folder_path) if os.path.isfile((folder_path + f))]
         all_file_paths = [folder_path + file_name for file_name in all_files]
@@ -47,7 +50,7 @@ class TxtFileProcessor:
         self.filePaths = []
         self.output_filename = "output.txt"
     
-    def extract_subsequent_line(self, start):
+    def extract_subsequent_line(self, start = ''):
         fileHandlers = []
         output_this = False
         with open(self.output_filename, 'w+') as out:
@@ -121,13 +124,17 @@ class TxtFileProcessor:
                 i += 1    
 
 if __name__ == "__main__":
+    expression = ''
+    start = ''
     myProcessor = TxtFileProcessor()
     if FILE_MODE == 0:
         myProcessor.load_from_folder(expression)
     elif FILE_MODE == 1:
+        myProcessor.load_from_folder_tree(expression)
+    elif FILE_MODE == 2:
         myProcessor.load_from_args()
     if PROCESS_MODE == 0:
-        myProcessor.line_by_line_merge(seperator)
+        myProcessor.line_by_line_merge()
     elif PROCESS_MODE == 1:
         myProcessor.top_bottom_merge()
     elif PROCESS_MODE == 2:
