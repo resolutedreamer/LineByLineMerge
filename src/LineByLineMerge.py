@@ -26,7 +26,6 @@ class TxtFileProcessor:
         for f in all_file_paths:
             if f.find(expression) != -1:
                 self.filePaths.append(f)
-        self.output_filename = 'merged_' + all_files[0]
         return len(self.filePaths)
         
     def load_from_args(self):
@@ -43,15 +42,12 @@ class TxtFileProcessor:
         # put argv arguments into filePaths
         for argument in sys.argv:
             self.filePaths.append(argument)
-        self.output_filename = 'merged_' + sys.argv[0]
         return len(self.filePaths)
     
-    def unload(self):
-        self.filePaths = []
-        self.output_filename = "output.txt"
-    
     def extract_subsequent_line(self, start = ''):
+        if len(self.filePaths) == 0:
         fileHandlers = []
+        self.output_filename = self.filePaths[0] + '_extracted'
         output_this = False
         with open(self.output_filename, 'w+') as out:
             print "Writing to " + self.output_filename
@@ -74,7 +70,9 @@ class TxtFileProcessor:
         
     
     def top_bottom_merge(self):
+        if len(self.filePaths) == 0:
         fileHandlers = []
+        self.output_filename = self.filePaths[0] + '_merged'
         with open(self.output_filename, 'w+') as out:
             print "Writing to " + self.output_filename
             for argument in self.filePaths:
@@ -91,7 +89,9 @@ class TxtFileProcessor:
                 out.write('\n')
     
     def line_by_line_merge(self, seperator = ''):
+        if len(self.filePaths) == 0:
         fileHandlers = []
+        self.output_filename = self.filePaths[0] + '_merged'
         exitFlag = True
         i = 1
         with open(self.output_filename, 'w+') as out:
