@@ -3,6 +3,8 @@ LineByLineMerge.py
 '''
 import sys
 import os
+import codecs
+
 
 FILE_MODE = 0
 PROCESS_MODE = 0
@@ -50,11 +52,11 @@ class TxtFileProcessor:
         fileHandlers = []
         self.output_filename = self.filePaths[0] + '_extracted'
         output_this = False
-        with open(self.output_filename, 'w+') as out:
+        with codecs.open(self.output_filename, 'w+') as out:
             print "Writing to " + self.output_filename
             for argument in self.filePaths:
                 try:
-                    f = open(argument, 'r+')
+                    f = codecs.open(argument, 'r+')
                     fileHandlers.append(f)
                     print f.closed
                 except:
@@ -75,11 +77,11 @@ class TxtFileProcessor:
             raise Exception("No files loaded")
         fileHandlers = []
         self.output_filename = self.filePaths[0] + '_merged'
-        with open(self.output_filename, 'w+') as out:
+        with codecs.open(self.output_filename, 'w+') as out:
             print "Writing to " + self.output_filename
             for argument in self.filePaths:
                 try:
-                    f = open(argument, 'r+')
+                    f = codecs.open(argument, 'r+')
                     fileHandlers.append(f)
                 except:
                     print "open " + argument + "failed"
@@ -97,11 +99,11 @@ class TxtFileProcessor:
         self.output_filename = self.filePaths[0] + '_merged'
         exitFlag = True
         i = 1
-        with open(self.output_filename, 'w+') as out:
+        with codecs.open(self.output_filename, 'w+') as out:
             print "Writing to " + self.output_filename
             for argument in self.filePaths:
                 try:
-                    f = open(argument, 'r+')
+                    f = codecs.open(argument, 'r+')
                     fileHandlers.append(f)
                 except:
                     print "open " + argument + "failed"
