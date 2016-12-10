@@ -46,6 +46,7 @@ class TxtFileProcessor:
     
     def extract_subsequent_line(self, start = ''):
         if len(self.filePaths) == 0:
+            raise Exception("No files loaded")
         fileHandlers = []
         self.output_filename = self.filePaths[0] + '_extracted'
         output_this = False
@@ -71,6 +72,7 @@ class TxtFileProcessor:
     
     def top_bottom_merge(self):
         if len(self.filePaths) == 0:
+            raise Exception("No files loaded")
         fileHandlers = []
         self.output_filename = self.filePaths[0] + '_merged'
         with open(self.output_filename, 'w+') as out:
@@ -90,6 +92,7 @@ class TxtFileProcessor:
     
     def line_by_line_merge(self, seperator = ''):
         if len(self.filePaths) == 0:
+            raise Exception("No files loaded")
         fileHandlers = []
         self.output_filename = self.filePaths[0] + '_merged'
         exitFlag = True
