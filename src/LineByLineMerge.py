@@ -50,7 +50,7 @@ class TxtFileProcessor:
         if len(self.filePaths) == 0:
             raise Exception("No files loaded")
         fileHandlers = []
-        self.output_filename = self.filePaths[0] + '_extracted'
+        self.output_filename = 'xtracted_' + self.filePaths[0]
         output_this = False
         with codecs.open(self.output_filename, 'w+') as out:
             print "Writing to " + self.output_filename
@@ -76,7 +76,7 @@ class TxtFileProcessor:
         if len(self.filePaths) == 0:
             raise Exception("No files loaded")
         fileHandlers = []
-        self.output_filename = self.filePaths[0] + '_merged'
+        self.output_filename = 'merged_' + self.filePaths[0]
         with codecs.open(self.output_filename, 'w+') as out:
             print "Writing to " + self.output_filename
             for argument in self.filePaths:
@@ -96,7 +96,7 @@ class TxtFileProcessor:
         if len(self.filePaths) == 0:
             raise Exception("No files loaded")
         fileHandlers = []
-        self.output_filename = self.filePaths[0] + '_merged'
+        self.output_filename = 'merged_' + self.filePaths[0]
         exitFlag = True
         i = 1
         with codecs.open(self.output_filename, 'w+') as out:
