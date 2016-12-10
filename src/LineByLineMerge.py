@@ -28,7 +28,7 @@ class TxtFileProcessor:
         all_file_paths = [folder_path + file_name for file_name in all_files_matching]
         for f in all_file_paths:
             self.filePaths.append(f)
-        self.output_filename = all_files[0]
+        self.output_filename = all_files_matching[0]
         return len(self.filePaths)
         
     def load_from_args(self):
