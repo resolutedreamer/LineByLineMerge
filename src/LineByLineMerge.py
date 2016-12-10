@@ -23,11 +23,12 @@ class TxtFileProcessor:
 
     def load_from_folder(self, expression = '.txt', folder_path = './'):
         print os.listdir(folder_path)
-        all_files = [f for f in os.listdir(folder_path) if os.path.isfile((folder_path + f))]
-        all_file_paths = [folder_path + file_name for file_name in all_files]
+        all_files_in_folder = [f for f in os.listdir(folder_path) if os.path.isfile((folder_path + f))]
+        all_files_matching = [f for f in all_files_in_folder if f.find(expression) != -1]
+        all_file_paths = [folder_path + file_name for file_name in all_files_matching]
         for f in all_file_paths:
-            if f.find(expression) != -1:
-                self.filePaths.append(f)
+            self.filePaths.append(f)
+        self.output_filename = all_files[0]
         return len(self.filePaths)
         
     def load_from_args(self):
@@ -44,13 +45,14 @@ class TxtFileProcessor:
         # put argv arguments into filePaths
         for argument in sys.argv:
             self.filePaths.append(argument)
+        self.output_filename = sys.argv[0]
         return len(self.filePaths)
     
     def extract_subsequent_line(self, start = ''):
         if len(self.filePaths) == 0:
             raise Exception("No files loaded")
         fileHandlers = []
-        self.output_filename = 'xtracted_' + self.filePaths[0]
+        self.output_filename = 'xtracted_' + self.output_filename
         output_this = False
         with codecs.open(self.output_filename, 'w+') as out:
             print "Writing to " + self.output_filename
@@ -76,7 +78,7 @@ class TxtFileProcessor:
         if len(self.filePaths) == 0:
             raise Exception("No files loaded")
         fileHandlers = []
-        self.output_filename = 'merged_' + self.filePaths[0]
+        self.output_filename = 'merged_' + self.output_filename
         with codecs.open(self.output_filename, 'w+') as out:
             print "Writing to " + self.output_filename
             for argument in self.filePaths:
@@ -96,7 +98,7 @@ class TxtFileProcessor:
         if len(self.filePaths) == 0:
             raise Exception("No files loaded")
         fileHandlers = []
-        self.output_filename = 'merged_' + self.filePaths[0]
+        self.output_filename = 'merged_' + self.output_filename
         exitFlag = True
         i = 1
         with codecs.open(self.output_filename, 'w+') as out:
