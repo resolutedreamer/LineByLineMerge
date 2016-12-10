@@ -126,7 +126,11 @@ class TxtFileProcessor:
                 # add a newline to indicate done with row
                 if exitFlag:
                     out.write('\n')
-                i += 1    
+                i += 1
+
+    def unload(self):		
+        self.filePaths = []		
+        self.output_filename = "output.txt"
 
 if __name__ == "__main__":
     expression = ''
