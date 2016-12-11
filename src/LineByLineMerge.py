@@ -135,13 +135,16 @@ class TxtFileProcessor:
         self.output_filename = "output.txt"
 
 if __name__ == "__main__":
+    path = './'
+    if len(sys.argv) == 2:
+        path = sys.argv[1]
     expression = ''
     start = ''
     myProcessor = TxtFileProcessor()
     if FILE_MODE == 0:
-        myProcessor.load_from_folder(expression)
+        myProcessor.load_from_folder(expression, path)
     elif FILE_MODE == 1:
-        myProcessor.load_from_folder_tree(expression)
+        myProcessor.load_from_folder_tree(expression, path)
     elif FILE_MODE == 2:
         myProcessor.load_from_args()
     if PROCESS_MODE == 0:
