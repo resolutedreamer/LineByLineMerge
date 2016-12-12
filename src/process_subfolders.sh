@@ -2,6 +2,6 @@
 
 for directory in */ ; do
     echo "$directory"
-    python LineByLineMerge.py $directory
+    python LineByLineMerge.py "$directory"
 done
 
