@@ -9,3 +9,5 @@ script: python ./src/LineByLineMergeTest.py
 addons:
     code_climate:
         repo_token: 49d8566533c8d2cc3d3eb380ea26879c2ad445c2ab3722e0e958ca0694bfd894
+after_sucess:
+  - CODECLIMATE_REPO_TOKEN=49d8566533c8d2cc3d3eb380ea26879c2ad445c2ab3722e0e958ca0694bfd894 codeclimate-test-reporter
